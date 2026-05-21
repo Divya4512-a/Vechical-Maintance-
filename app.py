@@ -1,5 +1,5 @@
 import streamlit as st
-import pickle
+import joblib
 import numpy as np
 import pandas as pd
 import time
@@ -11,20 +11,22 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
-
-# ── Load models ───────────────────────────────────────────────────────────────
 @st.cache_resource
 def load_models():
-    with open("datasets/vehicle_maintenance_model.pkl", "rb") as f:
-        maintenance_model = pickle.load(f)
-    with open("datasets/maintenance_cost_model.pkl", "rb") as f:
-        cost_model = pickle.load(f)
-    with open("datasets/fuel_consumption_after_model.pkl", "rb") as f:
-        fuel_model = pickle.load(f)
+
+    maintenance_model = joblib.load(
+        "datasets/vehicle_maintenance_model.pkl"
+    )
+
+    cost_model = joblib.load(
+        "datasets/maintenance_cost_model.pkl"
+    )
+
+    fuel_model = joblib.load(
+        "datasets/fuel_consumption_after_model.pkl"
+    )
+
     return maintenance_model, cost_model, fuel_model
-
-maintenance_model, cost_model, fuel_model = load_models()
-
 # ── Global CSS ─────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
